@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile User Form Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="css/styles.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/constants.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+    </style>
+    <script type="text/javascript">
+
+        function submitUserProfileData() {
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+
+                    var name = document.getElementById("name").value;
+                    var phone = document.getElementById("phoneNumber").value;
+                    var address = document.getElementById("address").value;
+                    var emergencyPhoneNumber = document.getElementById('emergencyPhoneNumber').value;
+                    var emergencyContact = document.getElementById('emergencyContact').value;
+                    var emergencyContactRelationship = document.getElementById('emergencyContactRelationship').value;
+
+                    var data = {
+                        name: name,
+                        phoneNumber: phone,
+                        address: address,
+                        emergencyContact: emergencyContact,
+                        emergencyContactPhoneNumber: emergencyPhoneNumber,
+                        emergencyContactRelationship: emergencyContactRelationship
+                    };
+
+                    // Send data to the server using fetch API with async/await and try/catch
+                    const response = await fetch(
+                        serverURL + "/api/UserProfile",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error("Error while saving data.");
+                    }
+                    response.data = await response.json();
+                    alert("Your profile was saved sucessfully");
+                    document.location.href = "index.html?userid="+response.data.id;
+
+                });
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <section>
+        <div class="mobile-index">
+            <div class="text-center">
+                <img src="images/logo.png" class="mb-3" alt="logo" width="100" />
+            </div>
+            <div class="card formbox">
+                <div class="card-body">
+                    
+                        <h5 class="mb-4">Personal Information</h5>
+                        <div class="form-group mb-3">
+                            <label>Name</label>
+                            <input type="text" class="form-control" id="name" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" id="phoneNumber" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Address</label>
+                            <textarea class="form-control" id="address"></textarea>
+                        </div>
+                        <div class="mb-3">&nbsp;</div>
+                        <h5 class="mb-4">Emergency Contact</h5>
+                        <div class="form-group mb-3">
+                            <label>Name</label>
+                            <input type="text" class="form-control" id="emergencyContact" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" id="emergencyPhoneNumber" />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Relationship</label>
+                            <input type="text" class="form-control" id="emergencyContactRelationship" />    
+                        </div>
+                        <div class="form-group mb-3">
+                            <button class="btn btn-primary" onclick="javascript:submitUserProfileData();">Save</button>
+                            <!--<a href="javascript:submitUserProfileData()">Save</a>-->
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .emergency-container {
+            background-color: #fff;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 480px;
+            width: 100%;
+            padding-bottom: 29px;
+            flex-direction: column;
+            overflow: hidden;
+            align-items: center;
+        }
+
+        .status-bar {
+            background-color: #fff;
+            align-self: stretch;
+            min-height: 50px;
+            width: 100%;
+            padding-top: 21px;
+        }
+
+        .status-content {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .status-time {
+            align-self: stretch;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding: 0 16px 0 6px;
+            font-family: "SF Pro", -apple-system, Roboto, Helvetica, sans-serif;
+            font-size: 17px;
+            color: #000;
+            font-weight: 590;
+            white-space: nowrap;
+            text-align: center;
+            line-height: 1;
+            flex: 1;
+        }
+
+        .dynamic-island {
+            align-self: stretch;
+            display: flex;
+            margin: auto 0;
+            width: 124px;
+            flex-shrink: 0;
+            height: 10px;
+        }
+
+        .status-indicators {
+            align-self: stretch;
+            display: flex;
+            margin: auto 0;
+            padding: 0 16px 0 6px;
+            align-items: center;
+            gap: 7px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .status-icon {
+            aspect-ratio: 1.58;
+            object-fit: contain;
+            object-position: center;
+            width: 19px;
+            fill: #000;
+            align-self: stretch;
+            margin: auto 0;
+            flex-shrink: 0;
+        }
+
+        .battery-icon {
+            aspect-ratio: 1.42;
+            object-fit: contain;
+            object-position: center;
+            width: 17px;
+            fill: #000;
+            align-self: stretch;
+            margin: auto 0;
+            flex-shrink: 0;
+        }
+
+        .response-options {
+            display: flex;
+            margin-top: 25px;
+            width: 100%;
+            max-width: 330px;
+            align-items: stretch;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .response-icon {
+            aspect-ratio: 0.78;
+            object-fit: contain;
+            object-position: center;
+            width: 84px;
+            flex-shrink: 0;
+        }
+
+        .response-icon-alt {
+            aspect-ratio: 0.9;
+            object-fit: contain;
+            object-position: center;
+            width: 84px;
+            margin: auto 0;
+            flex-shrink: 0;
+        }
+
+        .map-view {
+            aspect-ratio: 0.87;
+            object-fit: contain;
+            object-position: center;
+            width: 100%;
+            border-radius: 20px;
+            margin-top: 13px;
+            max-width: 346px;
+            border: 6px solid #000;
+            box-shadow: 0px 4px 9px 2px rgba(0, 0, 0, 0.25);
+        }
+
+        .response-details {
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: 0px 4px 9px 2px rgba(0, 0, 0, 0.25);
+            border: 6px solid #000;
+            display: flex;
+            margin-top: 13px;
+            width: 100%;
+            max-width: 349px;
+            padding: 6px 6px 19px 13px;
+            align-items: start;
+            gap: 13px;
+            overflow: hidden;
+        }
+
+        .response-icons {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .vehicle-icon {
+            aspect-ratio: 0.7;
+            object-fit: contain;
+            object-position: center;
+            width: 45px;
+            align-self: center;
+        }
+
+        .route-icon {
+            aspect-ratio: 1.89;
+            object-fit: contain;
+            object-position: center;
+            width: 72px;
+        }
+
+        .timing-details {
+            align-self: stretch;
+            display: flex;
+            margin: auto 0;
+            flex-direction: column;
+            align-items: start;
+            font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+            color: #000;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .time-row {
+            display: flex;
+            align-items: stretch;
+            gap: 40px 72px;
+            font-size: 13px;
+        }
+
+        .vehicle-row {
+            align-self: stretch;
+            display: flex;
+            align-items: stretch;
+            gap: 20px;
+            font-size: 10px;
+            font-weight: 400;
+            justify-content: space-between;
+        }
+
+        .time-row-alt {
+            display: flex;
+            margin-top: 20px;
+            align-items: stretch;
+            gap: 40px 64px;
+            font-size: 13px;
+        }
+
+        .response-type-row {
+            display: flex;
+            align-items: stretch;
+            gap: 40px 80px;
+            font-weight: 400;
+        }
+
+        .response-type {
+            font-size: 10px;
+        }
+
+        .patrol-type {
+            font-size: 10px;
+            margin: auto 0;
+        }
+
+        .status-indicators-alt {
+            display: flex;
+            margin-top: 8px;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .status-icon-large {
+            aspect-ratio: 1.41;
+            object-fit: contain;
+            object-position: center;
+            width: 65px;
+        }
+
+        .status-icon-small {
+            aspect-ratio: 0.88;
+            object-fit: contain;
+            object-position: center;
+            width: 30px;
+            align-self: center;
+            margin-top: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 351px;
+            align-items: stretch;
+            gap: 12px;
+            font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+            font-size: 18px;
+            color: #fff;
+            font-weight: 700;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .action-button-empty {
+            border-radius: 20px;
+            background-color: #b11e24;
+            box-shadow: 0px 4px 9px 2px rgba(0, 0, 0, 0.25);
+            border: 6px solid #fff;
+            display: flex;
+            width: 170px;
+            flex-shrink: 0;
+            height: 81px;
+        }
+
+        .cancel-button {
+            border-radius: 20px;
+            background-color: #b11e24;
+            box-shadow: 0px 4px 9px 2px rgba(0, 0, 0, 0.25);
+            border: 6px solid #000;
+            padding: 20px 44px;
+            overflow: hidden;
+            width: 340px;
+            color: white;
+            font-weight: bold;
+            font-size: larger;
+        }
+    </style>
+
+    <script type="text/javascript" src="js/constants.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+    <div class="emergency-container">
+        <main>
+            <section class="response-options">
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7f5dea00b3d6dd6d93d3dfe489daab8be1f24c4ea573465382761847f3e0e35b?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                     alt="Response option 1"
+                     class="response-icon" />
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9b4d91ebaffec9b6a4523e90c3e24aed1cf4280625bc040e4e2153995487ec2?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                     alt="Response option 2"
+                     class="response-icon-alt" />
+            </section>
+
+
+            <div class="map-view" id="map">
+                Map here
+                <!--<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/6783fb33550a8a15edf0455f09e84670113806d57d51c767b3bedb628ce09341?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+             alt="Map view"
+             class="map-view" />-->
+            </div>
+            <section class="response-details">
+                <div class="response-icons">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/caf76d3370b22146f3ae0011bb99ee4a2431ff447513a06bcb1a58866c3f99c8?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                         alt="Vehicle"
+                         class="vehicle-icon" />
+                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d1ca6445c56eda38f4b9fa66f5056b2d56481ddc6562951c69f9e27ac34773d4?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                         alt="Route"
+                         class="route-icon" />
+                </div>
+
+                <div class="timing-details">
+                    <div class="time-row">
+                        <time class="drone-response-time">**</time>
+                        <time class="motorbike-response-time">**</time>
+                    </div>
+                    <div class="vehicle-row">
+                        <span>Drone</span>
+                        <span>Motorbike</span>
+                    </div>
+                    <div class="time-row-alt">
+                        <time class="pcr-response-time">**</time>
+                        <time class="foot-response-time">**</time>
+                    </div>
+                    <div class="response-type-row">
+                        <span class="response-type">PCR</span>
+                        <span class="patrol-type">Foot Patrol</span>
+                    </div>
+                </div>
+
+                <div class="status-indicators-alt">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d47ee21149fcb4d6219bf8934b2baef1095ac56e133bf6da244f375d2d744f8e?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                         alt="Status indicator 1"
+                         class="status-icon-large" />
+                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/f9f89b1463b8364bd08cdeeb8d269bb571c650b2f65d55df5bc97c6a1e8b0fe7?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                         alt="Status indicator 2"
+                         class="status-icon-small" />
+                </div>
+            </section>
+
+            <footer class="action-buttons">
+                <button class="cancel-button">Cancel</button>
+            </footer>
+        </main>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlpCd4M34Hfxc-VRLXwUUZ6-pKFnKZA14&v=weekly&libraries=marker"
+                defer></script>
+        <script type="text/javascript">
+            let map;
+            let markers = new Map();
+            let droneMarkers = new Map();
+            let patrolMarkers = new Map();
+
+            function loadDrones(lat, lng, map) {
+                //Load Drone stations
+                var dataUrl = serverURL + '/api/drone?requestorLatitude=' + lat + '&requestorLongitude=' + lng;
+                var _locations = [];
+                var populate = true;
+                // Fetch data from the URL
+                $.getJSON(dataUrl, function (data) {
+                    $.each(data, function (index, item) {
+                        var droneStationImg = document.createElement("img");
+                        droneStationImg.src = "/StaticFiles/images/drone_red.png";
+
+                        if (populate) {
+                            $(".drone-response-time").text(item.timeInMinutes.toFixed(1) + " min");
+                            populate = false;
+                        }
+                        if (droneMarkers.has(item.id)) {
+                            var marker = droneMarkers.get(item.id);
+                            marker.position = new google.maps.LatLng(item.latitude, item.longitude);
+                        }
+                        else {
+                            const droneMarkerView = new google.maps.marker.AdvancedMarkerElement({
+                                map,
+                                position: { lat: item.latitude, lng: item.longitude },
+                                content: droneStationImg,
+                                title: "Drone Number: " + item.droneNumber + '\nDeployed Location: ' + item.droneName + '\nAddress: ' + item.stationAddress,
+                                gmpClickable: true,
+                            });
+                            droneMarkers.set(item.id, droneMarkerView);
+                        }
+                    });
+                });
+            }
+
+            function loadPatrols(lat, lng, map) {
+                //Load Patrolling officers
+                dataUrl = serverURL + '/api/PatrolLocations?requestorLatitude=' + lat + '&requestorLongitude=' + lng;
+                _locations = [];
+
+                // Fetch data from the URL
+                $.getJSON(dataUrl, function (data) {
+                    var patrolTypeName = "";
+                    console.log(data.length);
+                    $.each(data, function (index, item) {
+                        var patrolTypeImg = document.createElement("img");
+
+                        //only populate the first item of each patrol type
+                        if (patrolTypeName != item.patrol.patrolType.patrolTypeName) {
+                            if (item.patrol.patrolType.patrolTypeName.toLowerCase() == "pcr") {
+                                $(".pcr-response-time").text(item.timeInMinutes.toFixed(1) + " min");
+                            }
+                            else if (item.patrol.patrolType.patrolTypeName.toLowerCase() == "motorbike") {
+                                $(".motorbike-response-time").text(item.timeInMinutes.toFixed(1) + " min");
+                            }
+                            else if (item.patrol.patrolType.patrolTypeName.toLowerCase() == "foot soldier") {
+                                $(".foot-response-time").text(item.timeInMinutes.toFixed(1) + " min");
+                            }
+                            populateRoute(item.latitude, item.longitude, lat, lng, map, item.patrol.patrolTypeId);
+                        }
+                            
+                        patrolTypeName = item.patrol.patrolType.patrolTypeName;
+                        patrolTypeImg.src = "/StaticFiles/images/" + item.patrol.patrolType.patrolTypeName + ".png";
+
+                        if (patrolMarkers.has(item.patrolId)) {
+                            var marker = patrolMarkers.get(item.patrolId);
+                            marker.position = new google.maps.LatLng(item.latitude, item.longitude);
+                        }
+                        else {
+
+                            const droneMarkerView = new google.maps.marker.AdvancedMarkerElement({
+                                map,
+                                position: { lat: item.latitude, lng: item.longitude },
+                                content: patrolTypeImg,
+                                title: "Time to reach: " + item.timeInMinutes.toFixed(2) + " minutes. (" + item.distanceInKm.toFixed(2) + " kms) \nName: " + item.patrol.patrolNumber + "\nCall Sign: " + item.patrol.patrolCallSign + "\nPatrol Type: " + item.patrol.patrolType.patrolTypeName + '\n' + item.patrol.patrollingNotes,
+                                gmpClickable: true,
+                            });
+                            patrolMarkers.set(item.patrolId, droneMarkerView);
+                        }
+                    });
+                });
+            }
+
+            function loadRequestor(id, map) {
+                //Load Requestor information
+                var rdataUrl = serverURL + '/api/remoteLocation/' + id;
+
+                $.getJSON(rdataUrl, function (data) {
+                    var requestorImage = document.createElement("img");
+                    requestorImage.src = "/StaticFiles/images/requestor.png";
+                    
+                    lat = data.latitude;
+                    lng = data.longitude;
+
+                    if (markers.has(data.id)) {
+                        var marker = markers.get(data.id);
+                        marker.position = new google.maps.LatLng(data.latitude, data.longitude);
+                    }
+                    else {
+                        const requestorMarkerView = new google.maps.marker.AdvancedMarkerElement({
+                            map,
+                            position: { lat: data.latitude, lng: data.longitude },
+                            content: requestorImage,
+                            title: "Name: " + data.userProfile.name + '\nPhone: ' + data.userProfile.phoneNumber + '\n',
+                            gmpClickable: true,
+                        });
+                        markers.set(data.id, requestorMarkerView);
+                    }            
+                    loadDrones(lat, lng, map);
+                    loadPatrols(lat, lng, map);
+                    setTimeout(loadRequestor, 5000, id, map);
+                });
+            }
+
+            $(document).ready(function () {
+                //ahmedabad co-ordinates
+                const position = { lat: 23.025, lng: 72.554 };
+
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 12,
+                    center: position,
+                    mapId: "MAP_ID", // Map ID is required for advanced markers.
+                });
+
+                var urlParams = new URLSearchParams(window.location.search);
+                var lat = 0.0;
+                var lng = 0.0;
+
+                if (urlParams.has('id')) {
+                    var id = urlParams.get("id");
+                    loadRequestor(id, map);
+                }
+            });
+
+
+            function populateRoute(patrolLatitude, patrolLongitude, reqLat, reqLong, map, mode) {
+                const directionService = new google.maps.DirectionsService();
+                let strokeColor;
+                if (mode == 1) {
+                    strokeColor = "green";
+                }
+                else if (mode == 2) {
+                    strokeColor = "blue";
+                }
+                else if (mode == 3) {
+                    strokeColor = "red";
+                }
+                const directionRenderer = new google.maps.DirectionsRenderer({ map: map, polylineOptions: { strokeColor: strokeColor }, suppressMarkers: true });
+                calculateAndDisplayRoute(directionService, directionRenderer, { lat: patrolLatitude, lng: patrolLongitude }, { lat: reqLat, lng: reqLong }, 1);
+
+            }
+
+            function calculateAndDisplayRoute(directionsService, directionsRenderer, start, end, mode) {
+                let travelMode = google.maps.TravelMode.DRIVING;
+
+                if (mode == 2) {
+                    travelMode = google.maps.TravelMode.DRIVING;        //Two wheeler available only in computeRoutes v2: consider upgrading!
+                }
+                else if (mode == 3) {
+                    travelMode = google.maps.TravelMode.WALKING;
+                }
+                directionsService.route(
+                    {
+                        origin: start,
+                        destination: end,
+                        travelMode: travelMode,
+                    },
+                    (response, status) => {
+                        if (status === "OK") {
+                            directionsRenderer.setDirections(response);
+                        } else {
+                            console.error("Directions request failed due to " + status);
+                        }
+                    }
+                );
+            }
+
+        </script>
+    </div>
+</body>
+</html>

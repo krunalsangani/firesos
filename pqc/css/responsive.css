@@ -1,0 +1,184 @@
+/* Responsive Adjustments */
+@media (max-width: 1400px) {
+  .nav-link {
+    padding-right: 30px !important;
+  }
+  .nav-right .nav-item:nth-child(3) .nav-link{
+    margin-right: 30px !important;
+  }
+  .btn-orange{padding: 0.75rem 2rem;}
+  
+  .nav-logo{
+    width: 130px;
+  }
+  .turtleimg{right: 0; width: 100%;}
+  
+}
+@media (max-width: 1200px) {
+  .navbar{
+    padding: 0.5rem 1rem;
+  }
+  .navbar-content{
+    display: block !important;
+  }
+  
+  .main-footer {
+    padding: 10rem 0 10rem;
+  }
+  .contact-cta {
+    height: 1000px;
+  }
+  .contact-decoration {
+    margin-top: -20rem;
+  }
+  .visual-swiper{height: 600px;}
+  .visual-swiper .visualimg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+@media (max-width: 991px) {
+    .navbar-content {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .company-name {
+      font-size: 3rem;
+    }
+  
+    .service-text {
+      padding: 2rem;
+    }
+  .turtleimg{display: none;}
+    .cta-title,
+    .cta-text {
+      font-size: 3rem;
+    }
+    .about-text{
+      margin-right: 0;
+    }
+    .about-description {
+        margin-top: 20px;
+    }
+    .boxtitle {
+        font-size: 40px;
+    }
+    h2{
+      font-size: 40px;
+    }
+    h4{
+      font-size: 34px;
+    }
+    .secpad {
+        padding: 6rem 0;
+    }
+    .contact-cta {
+      height: 900px;
+    }
+    .contact-decoration {
+      margin-top: -15rem;
+    }
+    .footer-nav{
+      margin-top: 2rem;
+    }
+    .stats-container {
+      gap: 30px;
+      padding: 30px 15px;
+    }
+  
+    .stat-card {
+      padding: 25px 15px;
+    }
+  
+    .stat-number {
+      font-size: 48px;
+    }
+  
+    .stat-label {
+      font-size: 20px;
+    }
+    .spacer{height:60px}
+    .about-image, .manifesto-image{margin-bottom: 1rem;}
+    .team-card .info .member-name{font-size: 32px;}
+    .team-card .info .member-role{font-size: 18px;}
+    .brief-section .brief-image1{max-width: 480px; width: 83%; margin: auto; margin-top: 1rem; display: flex;} 
+    .brief-section .brief2{margin-top: 1rem;align-items: center;}
+    .brief-section .brief-image2{width: 100%;}
+    .servicestitlebox{margin-top: 3rem;margin-bottom: 2rem;}
+    .brief-section .brief2 .brief-text{padding: 2rem;}
+    .brief-section .text-wrap {margin-top: 0;}
+  }
+  
+  @media (max-width: 767px) {
+    h1 {
+        font-size: 60px;
+    }
+    .hero-decoration{
+      margin-top: 0;
+    }
+    .hero-content {
+      padding: 4rem 1rem;
+    }
+  
+    .about-section {
+      padding: 7rem 0 2rem;
+    }
+  
+    .service-card {
+      height: 400px;
+    }
+  
+    .showcase-section {
+      padding: 7rem 0 2rem;
+    }
+  
+    .blog-section {
+      padding: 6rem 0;
+    }
+  
+    .contact-cta {
+      padding: 4rem 0;
+    }
+    
+    .main-footer {
+      padding: 5rem 0;
+    }
+    .blog-hero .author-info{
+      display: block;
+    }
+    .blog-hero .author-info .author-name::before, .blog-hero .author-info .publish-date::before{display: none;}
+    .blog-hero .author-info .category-name, .blog-hero .author-info .author-name{margin: 0 0 1rem 0;}
+    .purpose-content .purpose-description{
+      font-size: 40px;
+    }
+    .clients-section{text-align: center;}
+    .service-box.xxl, .service-box.xl, .service-box.lg, .service-box.md, .service-box.long1, .service-box.long2, .service-box.fullthin, .service-box.equal {
+        height: 300px;
+    }
+    .visual-swiper{
+      height: 400px;
+    }
+    
+  }
+  
+@media (max-width: 640px) {
+  .stats-container {
+    gap: 20px;
+    padding: 20px 10px;
+  }
+
+  .stat-card {
+    padding: 20px 10px;
+    min-width: 100%;
+  }
+}
+  @media (max-width: 576px) {
+  .contact-cta {
+    height: 800px;
+  }
+  .contact-decoration {
+    margin-top: -7rem;
+  }
+}

@@ -1,0 +1,201 @@
+.shipping-container {
+  width: 320px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e1e1e;
+  line-height: 120%;
+  letter-spacing: -0.48px;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #757575;
+  line-height: 140%;
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  font-size: 16px;
+  color: #1e1e1e;
+  margin-bottom: 8px;
+  line-height: 140%;
+}
+
+.input-container {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: white;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  font-size: 16px;
+  color: #1e1e1e;
+  background: transparent;
+  font-family: "Inter", sans-serif;
+}
+
+.select-container {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  font-size: 16px;
+  color: #1e1e1e;
+  background: transparent;
+  font-family: "Inter", sans-serif;
+  appearance: none;
+  padding-right: 32px;
+}
+
+.chevron-icon {
+  position: absolute;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.textarea-container {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: white;
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  font-size: 16px;
+  color: #1e1e1e;
+  background: transparent;
+  font-family: "Inter", sans-serif;
+  resize: none;
+  height: 80px;
+}
+
+.terms-section {
+  margin-bottom: 24px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkbox-container {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1e1e1e;
+}
+
+.check-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.checkbox-label {
+  font-size: 16px;
+  color: #1e1e1e;
+}
+
+.terms-link {
+  margin-left: 28px;
+  font-size: 16px;
+  color: #757575;
+  text-decoration: underline;
+  display: block;
+}
+
+.save-button {
+  width: 100%;
+  padding: 12px;
+  color: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  background-color: #1e1e1e;
+}
+
+.hidden{
+    display:none;
+}
+
+.subtitle {
+    font-size: 14px;
+    font-weight: bold;
+    color: darkgreen;
+}
+
+@media (max-width: 991px) {
+  .shipping-container {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 640px) {
+  .shipping-container {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    font-weight:bold;
+    color:darkgreen;
+  }
+
+  .label {
+    font-size: 14px;
+  }
+
+  .checkbox-label {
+    font-size: 14px;
+  }
+
+  .terms-link {
+    font-size: 14px;
+  }
+}

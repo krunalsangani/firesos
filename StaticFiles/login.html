@@ -1,0 +1,253 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Login — Aadhar last 4</title>
+    <style>
+        /* Styling inspired by the gpshelp page: big red CTA, clean card */
+        :root {
+            --accent: #d32f2f;
+            --accent-dark: #b71c1c;
+            --muted: #6b6b6b;
+            --bg: #f7f7f8;
+            --card-bg: #ffffff;
+            --radius: 8px;
+            --maxw: 420px;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        html, body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(180deg,#fff,#f2f2f2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: #222;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--maxw);
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 8px 28px rgba(30,30,30,0.08);
+            padding: 28px;
+            box-sizing: border-box;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 44px;
+            border-radius: 6px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            padding: 5px;
+            box-shadow: 0 2px 8px rgba(211,47,47,0.18);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 18px
+        }
+
+        p.lead {
+            margin: 6px 0 18px;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        form .row {
+            margin-bottom: 14px
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 6px
+        }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 8px;
+        }
+
+        button.primary {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 6px 18px rgba(211,47,47,0.12);
+        }
+
+        button.secondary {
+            background: transparent;
+            border: 1px solid #ddd;
+            color: #444;
+            padding: 9px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .msg {
+            margin-top: 12px;
+            font-size: 14px
+        }
+
+            .msg.error {
+                color: #b00020
+            }
+
+            .msg.success {
+                color: #00695c
+            }
+
+        .small {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        footer.small {
+            margin-top: 16px;
+            text-align: center
+        }
+
+        .police-logo {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" role="main">
+
+        <header>
+            <div class="police-logo">
+                <img style="padding:0px" src="/StaticFiles/images/logo.png"
+                     alt="Fire Logo"
+                     class="police-logo" />
+            </div>
+            <div>
+                <h1>Login</h1>
+                <div class="small">Enter your Mobile number and last 4 digits of Aadhar</div>
+            </div>
+        </header>
+        <form id="loginForm">
+            <div class="row">
+                <label for="phoneNumber"><strong>Mobile Number</strong></label>
+                <input id="phoneNumber" name="phoneNumber" type="text" required placeholder="98250 98250" />
+            </div>
+
+            <div class="row">
+                <label for="aadhar"><strong>Last 4 digits of Aadhar</strong></label>
+                <input id="aadhar" name="aadhar" type="text" inputmode="numeric" maxlength="4" required placeholder="e.g. 1234" />
+            </div>
+
+            <div class="actions">
+                <button class="primary" type="submit">Login</button>
+                <button class="secondary" type="button" id="clearBtn">Clear</button>
+            </div>
+
+            <div id="message" class="msg" aria-live="polite"></div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        const msg = document.getElementById('message');
+        const clearBtn = document.getElementById('clearBtn');
+
+        clearBtn.addEventListener('click', () => {
+            form.reset();
+            msg.textContent = '';
+            msg.className = 'msg';
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            msg.textContent = 'Checking...';
+            msg.className = 'msg';
+
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const aadhar = document.getElementById('aadhar').value.trim();
+            
+            // basic client validation
+            if (!phoneNumber || aadhar.length !== 4 || !/^\d{4}$/.test(aadhar)) {
+                msg.textContent = 'Please enter a valid Mobile Number and last 4 digits (numbers).';
+                msg.className = 'msg error';
+                return;
+            }
+
+            try {
+                var data2 = { phoneNumber: phoneNumber, last4Aadhar: aadhar }
+                
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data2)
+                });
+
+                const data = await res.json();
+                
+                if (res.ok) {
+                    debugger;
+                    msg.textContent = data.message || 'Login successful';
+                    msg.className = 'msg success';
+                    
+                    document.location.href = "/staticfiles/index.html?userid=" + data.id + '&name=' + data.name;
+
+                    // NOTE: cookie set by server (HttpOnly) will NOT be readable from JS.
+                    // If you want a JS-readable copy (not recommended for sensitive tokens)
+                    // you can set another non-HttpOnly cookie like below — commented out by default:
+                    //
+                    // document.cookie = `AuthResponseClient=${encodeURIComponent(JSON.stringify(data))}; path=/; max-age=${60*60*24*7}`;
+
+                } else {
+                    msg.textContent = data.error || 'Login failed';
+                    msg.className = 'msg error';
+                }
+            } catch (err) {
+                console.error(err);
+                msg.textContent = 'Network error';
+                msg.className = 'msg error';
+            }
+        });
+    </script>
+</body>
+</html>

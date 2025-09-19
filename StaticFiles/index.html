@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Help Page</title>
+    <!--Main CSS with responsive CSS starts here-->
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 15px;
+        }
+
+        .header .logo {
+            width: 100%;
+            max-width: 140px;
+        }
+
+        .footer .scopx {
+            max-width: 80px;
+            flex:0;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            row-gap: 20px;
+        }
+
+            .main > textarea {
+                width: 100%;
+                max-width: 400px;
+                padding: 10px;
+                border-radius: 10px;
+                font-size: 14px;
+                box-sizing: border-box;
+                border: 2px solid #dddddd;
+                color: black;
+            }
+
+                .main > textarea:focus {
+                    border: 2px solid #f9cdcd;
+                }
+
+                .main > textarea:focus-visible {
+                    outline: 1px solid #f9cdcd;
+                }
+
+            .main > input[type="button"] {
+                width: 160px;
+                height: 50px;
+                background-color: #cd2626;
+                font-size: 24px;
+                color: #fff;
+                border-width: 0;
+                border-radius: 10px;
+                cursor: pointer;
+                height: 150px;
+            }
+    </style>
+    <script type="text/javascript" src="js/constants.js"></script>
+    <!--Main CSS with responsive CSS ends here-->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <!--Jquery to calculate window height starts here-->
+    
+
+    <!-- JAVASCRIPT CODE SECTION -->
+    <!-- Start:javaScript -->
+    <script type="text/javascript">
+        function sendCoordinates() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    try {
+                        var urlParams = new URLSearchParams(window.location.search);
+
+                        var userId = urlParams.get("userid");
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+                        var optionalInput = ""; //document.getElementById("optional-input").value;
+
+                        var data = {
+                            Latitude: latitude,
+                            Longitude: longitude,
+                            HelpText: optionalInput,
+                            UserId: userId
+                        };
+
+                        // Send data to the server using fetch API with async/await and try/catch
+                        const response = await fetch(
+                            serverURL + "/api/RemoteLocation",
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify(data),
+                            }
+                        );
+
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+
+                        const responseData = await response.json();
+
+                        console.log("Success:", responseData);
+                        document.location.href = "requestorview.html?id="+responseData.id;
+                    } catch (error) {
+                        console.error("Error:", error);
+                    }
+                });
+            } else {
+                alert("Geolocation is not supported by browser.");
+            }
+        }
+    </script>
+    <!-- End :javaScript -->
+    <!--Jquery to calculate window height ends here-->
+</head>
+<body>
+    <!--Main Sections Starts here-->
+    <section>
+        <div class="container">
+            <div class="header">
+                <img src="images/logo.png" class="logo" alt="logo">
+            </div>
+            <div class="main">
+                <input type="button" value="Emergency" onclick="javascript: sendCoordinates();">
+            </div>
+            <footer>Logged in as:<span id="username"></span></footer>
+            <div class="footer">
+                <img src="images/scopx.png" class="scopx" alt="scopx" />
+            </div>
+
+        </div>
+    </section>
+    <!--Main Sections Ends here-->
+</body>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        resize();
+        setTimeout(resize, 3000);
+
+        loadLoginDetails();
+
+    });
+
+    function loadLoginDetails() {
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("name")) {
+            name = urlParams.get("name");
+            document.getElementById('username').innerText = " " + name;
+        }
+    }
+
+    $(window).on("resize", function () { resize(); });
+
+    function resize() {
+        var mainHeight = 0;
+
+        var headerHeight = $(".header").height();
+        var footerHeight = $(".footer").height();
+        var windowHeight = $(window).height();
+        /*alert(headerHeight);
+        alert(footerHeight);
+        alert(mainHeight);*/
+        mainHeight = windowHeight - (headerHeight + footerHeight);
+
+        $(".main").css("height", mainHeight);
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Google Maps Multiple Markers</title>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyBlpCd4M34Hfxc-VRLXwUUZ6-pKFnKZA14"
+            type="text/javascript"></script>
+</head>
+<body>
+    <!-- Top Info Section -->
+    <div class="top-info">
+        <div class="panel">
+            <div style="float:left">
+                <img style="padding:10px" src="/StaticFiles/images/logo.png"
+                     alt="Fire Logo"
+                     class="police-logo" />
+            </div>
+            <div style="float:left;margin-left:160px">
+                <h1>
+                    Ahmedabad Fire Monitoring Dashboard
+                </h1>
+                <h2>&nbsp;</h2>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    var locations = [
+        ['Mondeal Square - Near exit gate', 23.012324, 72.5029979, 2],
+        ['CG Road - Opp Reliance showroom', 23.0216238,72.5797068, 2]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: new google.maps.LatLng(23.03, 72.58),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+    </script>
+</body>
+</html>

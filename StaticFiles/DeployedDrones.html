@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Table from URL</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyBlpCd4M34Hfxc-VRLXwUUZ6-pKFnKZA14"
+            type="text/javascript"></script>
+    <style>
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+            table caption {
+                font-size: 1.5em;
+                margin: .5em 0 .75em;
+            }
+
+            table tr {
+                background-color: #f8f8f8;
+                border: 1px solid #ddd;
+                padding: .35em;
+            }
+
+            table th,
+            table td {
+                padding: .625em;
+                text-align: center;
+            }
+
+            table th {
+                font-size: .85em;
+                letter-spacing: .1em;
+                text-transform: uppercase;
+            }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+                table caption {
+                    font-size: 1.3em;
+                }
+
+                table thead {
+                    border: none;
+                    clip: rect(0 0 0 0);
+                    height: 1px;
+                    margin: -1px;
+                    overflow: hidden;
+                    padding: 0;
+                    position: absolute;
+                    width: 1px;
+                }
+
+                table tr {
+                    border-bottom: 3px solid #ddd;
+                    display: block;
+                    margin-bottom: .625em;
+                }
+
+                table td {
+                    border-bottom: 1px solid #ddd;
+                    display: block;
+                    font-size: .8em;
+                    text-align: right;
+                }
+
+                table td::before {
+                    /*
+                * aria-label has no advantage, it won't be read inside a table
+                content: attr(aria-label);
+                */
+                    content: attr(data-label);
+                    float: left;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+
+                table td:last-child {
+                    border-bottom: 0;
+                }
+                }
+        /* general styling */
+        body {
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.25;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Active Help Requests</h1>
+    <div id="table-container"></div>
+    <div id="map" style="width: 1080px; height: 400px;margin-top:50px"></div>
+    <script>
+        $(document).ready(function () {
+            // Example URL with mock data
+            var dataUrl = serverURL + '/api/RemoteLocation';
+            var _locations = [];
+
+            // Fetch data from the URL
+            $.getJSON(dataUrl, function (data) {
+                
+                // Create a table element
+                var table = $('<table></table>');
+
+                // Create the header row
+                var headerRow = $('<tr></tr>');
+                headerRow.append('<th>Latitude</th>');
+                headerRow.append('<th>Longitude</th>');
+                headerRow.append('<th>Help Description</th>');
+                headerRow.append('<th>Created At</th>');
+                table.append(headerRow);
+
+                // Loop through the data and create rows
+                $.each(data, function (index, item) {
+                    var row = $('<tr></tr>');
+
+                    var created = new Date(item.created);
+
+                    row.append('<td>' + item.latitude + '</td>');
+                    row.append('<td>' + item.longitude + '</td>');
+                    row.append('<td>' + item.helpText + '</td>');
+                    row.append('<td>' + created.toLocaleString("hi-IN") + '</td>');
+                    table.append(row);
+
+                    var obj = {};
+                    obj.helpText = item.helpText;
+                    obj.latitude = item.latitude;
+                    obj.longitude = item.longitude;
+                    _locations.push(obj);
+
+                });
+
+                // Append the table to the container
+                $('#table-container').append(table);
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 10,
+                    center: new google.maps.LatLng(23.03, 72.58),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+
+                var infowindow = new google.maps.InfoWindow();
+
+                var marker, i;
+
+                for (i = 0; i < _locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(_locations[i].latitude, _locations[i].longitude),
+                        map: map
+                    });
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(_locations[i].helpText);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+            });
+
+
+            
+
+        });
+    
+        
+    </script>
+</body>
+</html>

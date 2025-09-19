@@ -1,0 +1,167 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="css/patrolling.css" />
+    <script type="text/javascript" src="js/constants.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        function startPatrolling(isRepeat) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    try {
+
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+                        var patrollingNotes = document.getElementById("patrollingNote").value;
+                        var phoneNumber = document.getElementById('phoneNumber').value;
+
+                        var data = {
+                            Latitude: latitude,
+                            Longitude: longitude,
+                            PatrollingNotes: patrollingNotes,
+                            PhoneNumber: phoneNumber,
+                            PatrolId: null
+                        };
+
+                        // Send data to the server using fetch API with async/await and try/catch
+                        const response = await fetch(
+                            serverURL + "/api/PatrolLocations",
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify(data),
+                            }
+                        );
+
+                        if (!response.ok) {
+                            throw new Error("Cannot start patrolling with the given phone number. Please register the phone number with the patrolling station.");
+                        }
+
+                        const responseData = await response.json();
+                        console.log("Success:", responseData);
+                        $(".callNameData").text(responseData.patrolCallSign);
+                        $(".callNumberData").text(responseData.patrolNumber);
+                        if (isRepeat == 0) {
+                            $(".hidden").show();
+                            $("#patrollingNote").prop('disabled', true);
+                            $(".save-button").prop('disabled', true); 3
+                        }
+                        $(".location").text("Your location was last sent at: " + new Date().toLocaleString('en-IN', { timeZone: 'IST', hour12: false }).replace(',', ''));
+                        setTimeout("javascript:startPatrolling(1)", 10000);
+                    } catch (error) {
+                        console.error("Error:", error);
+                    }
+                });
+            } else {
+                alert("Geolocation is not supported by browser.");
+            }
+        }
+    </script>
+    <style>
+        .emergency-container {
+            background-color: #fff;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 480px;
+            width: 100%;
+            padding-bottom: 29px;
+            flex-direction: column;
+            overflow: hidden;
+            align-items: center;
+        }
+
+        .response-options {
+            display: flex;
+            margin-top: 25px;
+            width: 100%;
+            max-width: 330px;
+            align-items: stretch;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .response-icon {
+            aspect-ratio: 0.78;
+            object-fit: contain;
+            object-position: center;
+            width: 84px;
+            flex-shrink: 0;
+        }
+
+        .response-icon-alt {
+            aspect-ratio: 0.9;
+            object-fit: contain;
+            object-position: center;
+            width: 84px;
+            margin: auto 0;
+            flex-shrink: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="emergency-container">
+        <main>
+            <section class="response-options">
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7f5dea00b3d6dd6d93d3dfe489daab8be1f24c4ea573465382761847f3e0e35b?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                     alt="Response option 1"
+                     class="response-icon" />
+                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9b4d91ebaffec9b6a4523e90c3e24aed1cf4280625bc040e4e2153995487ec2?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                     alt="Response option 2"
+                     class="response-icon-alt" />
+            </section>
+
+            <form class="shipping-container">
+                <header class="header">
+                    <h1 class="title">Patrolling information</h1>
+                </header>
+
+                <section class="form-group">
+                    <label for="fullName" class="label">Phone Number</label>
+                    <div class="input-container">
+                        <input type="text" id="phoneNumber" placeholder="Value" class="input" />
+                    </div>
+                </section>
+
+                <section class="form-group">
+                    <label for="deliveryNote" class="label">Notes to Patrolling Station</label>
+                    <div class="textarea-container">
+                        <textarea id="patrollingNote"
+                                  placeholder="Value"
+                                  class="textarea"></textarea>
+                    </div>
+                </section>
+
+                <section class="form-group hidden">
+                    <label for="deliveryNote" class="label">Call Name</label>
+                    <div class="textarea-container">
+                        <span for="callNameData" class="callNameData"></span>
+                    </div>
+                </section>
+
+                <section class="form-group hidden">
+                    <label for="deliveryNote" class="label">Call Number</label>
+                    <div class="textarea-container">
+                        <span for="callNumberData" class="callNumberData"></span>
+                    </div>
+                </section>
+                <section class="form-group hidden">
+                    <p class="subtitle hidden">You are now patrolling live.</p>
+                    <p class="subtitle location"></p>
+                    <br />
+                </section>
+                <button type="button" class="save-button" onclick="javascript: startPatrolling(0);">Start Patrolling</button>
+            </form>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+@font-face {
+    font-family: "Athelas";
+    src: local("../fonts/Athelas/Athelas-Regular"), url(../fonts/Athelas/Athelas-Regular.woff2) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Athelas";
+    src: local("../fonts/Athelas/Athelas-Bold"), url(../fonts/Athelas/Athelas-Bold.woff2) format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SFProDisplay";
+    src: local("../fonts/SFProDisplay/SFProDisplay-Regular"), url(../fonts/SFProDisplay/SFProDisplay-Regular.woff2) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "SFProDisplay";
+    src: local("../fonts/SFProDisplay/SFProDisplay-Medium"), url(../fonts/SFProDisplay/SFProDisplay-Medium.woff2) format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "SFProDisplay";
+    src: local("../fonts/SFProDisplay/SFProDisplay-Semibold"), url(../fonts/SFProDisplay/SFProDisplay-Semibold.woff2) format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "SFProDisplay";
+    src: local("../fonts/SFProDisplay/SFProDisplay-Bold"), url(../fonts/SFProDisplay/SFProDisplay-Bold.woff2) format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}

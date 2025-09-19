@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicle Number Plate Identificator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD"
+      crossorigin="anonymous"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-sm">
+      <div class="container">
+        <a class="navbar-brand" href="#"
+          >Vehicle Number<br />Plate<br />Identificator</a
+        >
+        <div class="collapse navbar-collapse justify-content-center">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="home.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="list.html">List</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="profile.html">Profile</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="main-container">
+      <div class="container">
+        <div class="text-center pt-3">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#vehiclemodal"
+          >
+            Launch demo modal
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#vehiclemodal1"
+          >
+            Launch demo modal 1
+          </button>
+        </div>
+        <!-- Modal -->
+        <div
+          class="modal fade vehiclemodal"
+          id="vehiclemodal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="vehiclemodalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-lg modal-dialog-centered"
+            role="document"
+          >
+            <div class="modal-content">
+              <div class="modal-body p-0">
+                
+                <div class="row">
+                  <div class="col-auto vehicleimg">
+                    <img src="images/vehicleimg.jpg" alt="vehicle image" class="img-fluid" />
+                  </div>
+                  <div class="col vehicleinfo">
+                    <div class="modalclosebtn">
+                      <span data-bs-dismiss="modal" aria-label="Close" style="cursor: pointer;">
+                        <span aria-hidden="true">&times;</span>
+                      </span>
+                    </div>
+                    <h3 class="title">VID_193C32291</h3>
+                    <p class="date">Jan 8, 14:32</p>
+                    <div class="my-4">
+                      <div class="fw-bold mb-2">ID</div>
+                      <div class="row align-items-center">
+                        <div class="col-auto  vnum">
+                          <p class="mb-2">MH 20 TC 744 A</p>
+                          <p class="mb-0">MH 20 EE 0943</p>
+                        </div>
+                        <div class="col ml-auto">
+                          <button class="btn btn-icon">
+                            <img src="images/copy-icon.png" alt="copy icon" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center mt-5 pt-5">
+                      <button class="btn btn-sm btn-primary w-100"><i class="bi bi-arrow-down-short"></i>&nbsp;&nbsp;&nbsp;Download</button>
+                      <div class="py-1" style="color: #1D63CC;">OR</div>
+                      <button class="btn btn-sm btn-light w-100">Process another file</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div
+          class="modal fade vehiclemodal"
+          id="vehiclemodal1"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="vehiclemodalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-lg modal-dialog-centered"
+            role="document"
+          >
+            <div class="modal-content">
+              <div class="modal-body p-0">
+                
+                <div class="row">
+                  <div class="col-auto vehicleimg">
+                    <img src="images/vehicleimg.jpg" alt="vehicle image" class="img-fluid" />
+                  </div>
+                  <div class="col vehicleinfo">
+                    <div class="modalclosebtn">
+                      <span data-bs-dismiss="modal" aria-label="Close" style="cursor: pointer;">
+                        <span aria-hidden="true">&times;</span>
+                      </span>
+                    </div>
+                    <h3 class="title">VID_193C32291</h3>
+                    <p class="date">Jan 8, 14:32</p>
+                    <div class="my-5">
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <p class="mb-2">1:06, 154 MB</p>
+                          <p class="mb-0">Tokens to process: 25</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center mt-5 pt-5">
+                      <p class="fw-bold">Total tokens: <span class="bluetxt">571</span></p>
+                      <button class="btn btn-sm btn-primary w-100">Process</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

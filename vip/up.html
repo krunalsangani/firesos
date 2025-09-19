@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Number Plate Identificator</title>
+    <script type="text/javascript" src="js/constants.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script type="text/javascript">
+        function launchFile() {
+            document.getElementById('upFile').click();
+            $(".upload-box").classList.add("loading");
+            $(".upload-box").disabled = true;
+        }
+        // preventing page from redirecting
+        $("html").on("dragover", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(".mt-4").text("Drag here");
+        });
+
+        $("html").on("drop", function (e) { e.preventDefault(); e.stopPropagation(); });
+
+        // Drag enter
+        $('.upload-box').on('dragenter', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $("h1").text("Drop");
+        });
+
+        // Drag over
+        $('.upload-box').on('dragover', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $("h1").text("Drop");
+        });
+
+        // Drop
+        $('.upload-box').on('drop', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            $("h1").text("Upload");
+
+            var file = e.originalEvent.dataTransfer.files;
+            var fd = new FormData();
+
+            fd.append('file', file[0]);
+
+            //uploadData(fd);
+        });
+
+        $(document).ready(function () {
+            // file selected
+            $("#upFile").change(function () {
+                alert('in...');
+                var fd = new FormData();
+
+                var files = $('#upFile')[0].files[0];
+
+                fd.append('file', files);
+
+                uploadData(fd);
+            });
+        });
+
+        function uploadData(formdata) {
+            debugger;
+            $.ajax({
+                url: serverURL + '/api/imageFile/',
+                type: 'post',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function (response) {
+                    $(".upload-box").classList.remove("loading");
+                    $(".upload-box").disabled = false;            
+                },
+                error: function (jqXHR, exception) {
+                    console.log(jqXHR.status);
+                    console.log(jqXHR.responseText);
+                }
+            });
+        }
+
+    </script>
+    <style>
+        #upFile {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">Vehicle Number<br />Plate<br />Identificator</a>
+            <div class="collapse navbar-collapse justify-content-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="list.html">List</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main-container">
+        <!-- File Upload Section -->
+        <div class="upload-box" onclick="javascript:launchFile();">
+            <h1></h1>
+            <input type="file" name-="upFile" id="upFile" class="upFile" />
+            <img src="images/upload-icon.png" width="50" alt="Upload Icon">
+            <p class="mt-4">Drag and drop an image or video here</p>
+            <p class="py-4">OR</p>
+            <p><strong>Browse files on your computer</strong></p>
+        </div>
+    </div>
+</body>
+</html>

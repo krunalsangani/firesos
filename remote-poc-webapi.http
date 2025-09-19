@@ -1,0 +1,11 @@
+@remote-poc-webapi_HostAddress = https://localhost:7092
+@remote_poc_webapi_HostAddress = http://localhost:5087
+
+GET {{remote_poc_webapi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{remote-poc-webapi_HostAddress}}/api/remotelocation
+
+###

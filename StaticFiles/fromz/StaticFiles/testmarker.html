@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<!--
+ @license
+ Copyright 2024 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+<head>
+    <title>Complex Marker Icons</title>
+    <style>
+        /**
+ * @license
+ * Copyright 2024 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Shift the flag icon to the right so that the bottom of the flagpole
+ * aligns with the anchor point. */
+        .flag-icon {
+            position: relative;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <gmp-map center="23.025, 72.554" zoom="10" map-id="map">
+
+        <gmp-advanced-marker position="23.025696106566702,72.55417346766076" title="Drone Station">
+            <img class="flag-icon"
+                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/53a46fb4d95861affe81b661c26af1083e1f571d" />
+        </gmp-advanced-marker>
+    </gmp-map>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlpCd4M34Hfxc-VRLXwUUZ6-pKFnKZA14&loading=async&libraries=marker&v=beta&solution_channel=GMP_CCS_complexmarkers_v3"
+            defer></script>
+
+    
+</body>
+</html>
