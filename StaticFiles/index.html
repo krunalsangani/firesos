@@ -267,7 +267,7 @@
                     <span class="icon"></span> Ambulance
                 </button>-->
             </div>
-
+            <footer>Logged in as: <span id="username"></span></footer>
             <div class="footer">
                 <img src="images/scopx.png" class="scopx" alt="scopx" />
             </div>
@@ -279,8 +279,15 @@
 <script type="text/javascript">
     $(document).ready(function () {
         resize();
+        loadLoginDetails();
         setTimeout(resize, 3000);
     });
+
+    function loadLoginDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get("name") || "Guest";
+        document.getElementById("username").innerText = decodeURIComponent(userName);
+    }
 
     $(window).on("resize", function () { resize(); });
 
