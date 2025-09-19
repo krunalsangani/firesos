@@ -7,9 +7,24 @@
     <title>Help Page</title>
     <!--Main CSS with responsive CSS starts here-->
     <style type="text/css">
+        :root {
+            --police-blue: #0b5fff;
+            --police-red: #ff2645;
+            --fire-red: #c50016;
+            --fire-orange: #ff5a36;
+            --amb-blue: #0aa7ff;
+            --amb-white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 0;
+            background: #f7f7f9;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
         }
 
         .container {
@@ -18,15 +33,24 @@
             padding: 0 15px;
         }
 
-        .header .logo {
-            width: 100%;
-            max-width: 140px;
+        .header {
+            padding: 12px 0;
         }
 
-        .footer .scopx {
-            max-width: 80px;
-            flex:0;
+            .header .logo {
+                width: 100%;
+                max-width: 280px;
+                height:150px;
+            }
+
+        .footer {
+            padding: 12px 0;
         }
+
+            .footer .scopx {
+                max-width: 80px;
+                flex: 0;
+            }
 
         .main {
             display: flex;
@@ -42,9 +66,9 @@
                 padding: 10px;
                 border-radius: 10px;
                 font-size: 14px;
-                box-sizing: border-box;
                 border: 2px solid #dddddd;
                 color: black;
+                background: #fff;
             }
 
                 .main > textarea:focus {
@@ -55,77 +79,154 @@
                     outline: 1px solid #f9cdcd;
                 }
 
-            .main > input[type="button"] {
-                width: 160px;
-                height: 50px;
-                background-color: #cd2626;
-                font-size: 24px;
-                color: #fff;
-                border-width: 0;
-                border-radius: 10px;
-                cursor: pointer;
-                height: 150px;
+        /* Shared emergency button styles */
+        .btn-emg {
+            width: 240px;
+            height: 150px;
+            border: 0;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: .3px;
+            box-shadow: 0 8px 18px rgba(0,0,0,.18);
+            transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            user-select: none;
+        }
+
+            .btn-emg:focus-visible {
+                outline: 3px solid rgba(0,0,0,.25);
+                outline-offset: 2px;
             }
+
+            .btn-emg:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 10px 22px rgba(0,0,0,.22);
+            }
+
+            .btn-emg:active {
+                transform: translateY(0);
+                filter: brightness(.96);
+            }
+
+        /* Individual schemes */
+        /* POLICE: red + blue light cue */
+        .btn-police {
+            background: linear-gradient(90deg, var(--police-blue) 0%, #194cff 50%, var(--police-red) 100%);
+            text-shadow: 0 1px 2px rgba(0,0,0,.4);
+        }
+
+        /* FIRE: classic red with a hint of orange */
+        .btn-fire {
+            background: linear-gradient(180deg, var(--fire-orange) 0%, var(--fire-red) 70%);
+            text-shadow: 0 1px 2px rgba(0,0,0,.45);
+        }
+
+        /* AMBULANCE: blue + white identification */
+        .btn-ambulance {
+            background: linear-gradient(90deg, var(--amb-blue) 0%, #61c9ff 55%, var(--amb-white) 100%);
+            color: #0b2540;
+            border: 2px solid var(--amb-blue);
+            text-shadow: none;
+        }
+
+        /* Utility: icon size */
+        .btn-emg .icon {
+            font-size: 28px;
+            line-height: 1;
+        }
+
+        /* Responsive widths */
+        @media (max-width: 480px) {
+            .btn-emg {
+                width: 100%;
+                max-width: 420px;
+            }
+        }
     </style>
     <script type="text/javascript" src="js/constants.js"></script>
     <!--Main CSS with responsive CSS ends here-->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-    <!--Jquery to calculate window height starts here-->
-    
-
     <!-- JAVASCRIPT CODE SECTION -->
-    <!-- Start:javaScript -->
     <script type="text/javascript">
-        function sendCoordinates() {
-            if (navigator.geolocation) {
+        async function sendCoordinates(serviceCode) {
+            debugger;
+            const buttons = document.querySelectorAll(".btn-emg");
+            const clicked = document.getElementById("firebtn");
+            const originalText = clicked ? clicked.innerHTML : "";
+            
+            try {
+                // Basic loading state
+                if (clicked) {
+                    clicked.disabled = true;
+                    clicked.innerHTML = "Locating…";
+                }
+                buttons.forEach(b => b.disabled = true);
+
+                if (!navigator.geolocation) {
+                    alert("Geolocation is not supported by this browser.");
+                    return;
+                }
+
+                //const position = await new Promise((resolve, reject) => {
+                //    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                //        enableHighAccuracy: false,
+                //        timeout: 15000,
+                //        maximumAge: 0
+                //    });
+                //});
                 navigator.geolocation.getCurrentPosition(async (position) => {
-                    try {
-                        var urlParams = new URLSearchParams(window.location.search);
+                
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const userId = urlParams.get("userid");
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const optionalInput = ""; // document.getElementById("optional-input")?.value || "";
 
-                        var userId = urlParams.get("userid");
-                        var latitude = position.coords.latitude;
-                        var longitude = position.coords.longitude;
-                        var optionalInput = ""; //document.getElementById("optional-input").value;
+                    const data = {
+                        Latitude: latitude,
+                        Longitude: longitude,
+                        HelpText: optionalInput,
+                        UserId: userId,
+                        TypeId: serviceCode   // 1 = Fire, 2 = Police, 3 = Ambulance
+                    };
 
-                        var data = {
-                            Latitude: latitude,
-                            Longitude: longitude,
-                            HelpText: optionalInput,
-                            UserId: userId
-                        };
-
-                        // Send data to the server using fetch API with async/await and try/catch
-                        const response = await fetch(
-                            serverURL + "/api/RemoteLocation",
-                            {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify(data),
-                            }
-                        );
-
-                        if (!response.ok) {
-                            throw new Error("Network response was not ok");
+                    const response = await fetch(
+                        serverURL + "/api/RemoteLocation",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(data),
                         }
+                    );
 
-                        const responseData = await response.json();
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    const responseData = await response.json();
 
-                        console.log("Success:", responseData);
-                        document.location.href = "requestorview.html?id="+responseData.id;
-                    } catch (error) {
-                        console.error("Error:", error);
-                    }
+                    console.log("Success:", responseData);
+                    clicked.innerHTML = "Request Sent";
+
+                    document.location.href = "requestorview.html?id=" + responseData.id;
                 });
-            } else {
-                alert("Geolocation is not supported by browser.");
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Unable to send location. Please try again.");
+            } finally {
+                // restore UI
+                if (clicked) {
+                    clicked.disabled = false;
+                    clicked.innerHTML = originalText;
+                }
+                buttons.forEach(b => b.disabled = false);
             }
         }
     </script>
-    <!-- End :javaScript -->
-    <!--Jquery to calculate window height ends here-->
 </head>
 <body>
     <!--Main Sections Starts here-->
@@ -134,52 +235,61 @@
             <div class="header">
                 <img src="images/logo.png" class="logo" alt="logo">
             </div>
-            <div class="main">
-                <input type="button" value="Emergency" onclick="javascript: sendCoordinates();">
+
+            <div class="main" role="group" aria-label="Emergency services">
+                <button class="btn-emg btn-fire" id="firebtn"
+                        data-service="1"
+                        aria-label="Fire emergency"
+                        onclick="sendCoordinates(1)">
+                    <span class="icon"></span> Fire
+                </button>
+
+                <span>
+                    Thank you for sharing location of the fire.
+                    After pressing the red button, you are also required to register your complaint on 101/112.
+                 </span>
+                 <span>
+                    આગનાં સ્થળ અંગેની માહિતી મોકલવા બદલ આભાર.
+                    લાલ બટન દબાવ્યા બાદ આગની ફરિયાદ ૧૦૧/૧૧૨ પર પણ કરવી જરુરી છે.
+                </span>
+
+                <!--<button class="btn-emg btn-police"
+                        data-service="2"
+                        aria-label="Police emergency"
+                        onclick="sendCoordinates(2)">
+                    <span class="icon"></span> Police
+                </button>
+
+                <button class="btn-emg btn-ambulance"
+                        data-service="3"
+                        aria-label="Ambulance emergency"
+                        onclick="sendCoordinates(3)">
+                    <span class="icon"></span> Ambulance
+                </button>-->
             </div>
-            <footer>Logged in as:<span id="username"></span></footer>
+
             <div class="footer">
                 <img src="images/scopx.png" class="scopx" alt="scopx" />
             </div>
-
         </div>
     </section>
     <!--Main Sections Ends here-->
 </body>
-<script type="text/javascript">
 
+<script type="text/javascript">
     $(document).ready(function () {
         resize();
         setTimeout(resize, 3000);
-
-        loadLoginDetails();
-
     });
-
-    function loadLoginDetails() {
-        var urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has("name")) {
-            name = urlParams.get("name");
-            document.getElementById('username').innerText = " " + name;
-        }
-    }
 
     $(window).on("resize", function () { resize(); });
 
     function resize() {
-        var mainHeight = 0;
-
-        var headerHeight = $(".header").height();
-        var footerHeight = $(".footer").height();
-        var windowHeight = $(window).height();
-        /*alert(headerHeight);
-        alert(footerHeight);
-        alert(mainHeight);*/
-        mainHeight = windowHeight - (headerHeight + footerHeight);
-
-        $(".main").css("height", mainHeight);
+        var headerHeight = $(".header").outerHeight() || 0;
+        var footerHeight = $(".footer").outerHeight() || 0;
+        var windowHeight = $(window).height() || 0;
+        var mainHeight = windowHeight - (headerHeight + footerHeight);
+        $(".main").css("height", Math.max(mainHeight, 320)); // keep a reasonable min height
     }
-
 </script>
-
 </html>

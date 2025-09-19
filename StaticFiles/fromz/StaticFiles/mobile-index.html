@@ -18,18 +18,20 @@
     <!-- JAVASCRIPT CODE SECTION -->
     <!-- Start:javaScript -->
     <script type="text/javascript">
-        function sendCoordinates() {
+        function sendCoordinates(typeId) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     try {
                         var latitude = position.coords.latitude;
                         var longitude = position.coords.longitude;
                         var optionalInput = ""; //document.getElementById("optional-input").value;
+                        
 
                         var data = {
                             Latitude: latitude,
                             Longitude: longitude,
                             HelpText: optionalInput,
+                            TypeId: typeId
                         };
 
                         // Send data to the server using fetch API with async/await and try/catch

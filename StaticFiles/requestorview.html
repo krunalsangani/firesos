@@ -274,7 +274,7 @@
 
         .cancel-button {
             border-radius: 20px;
-            background-color: #b11e24;
+            background-color: green;
             box-shadow: 0px 4px 9px 2px rgba(0, 0, 0, 0.25);
             border: 6px solid #000;
             padding: 20px 44px;
@@ -283,6 +283,14 @@
             color: white;
             font-weight: bold;
             font-size: larger;
+        }
+
+        .help{
+            font-weight:bold;
+            font-size:larger;
+            color:black;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
         }
     </style>
 
@@ -294,7 +302,7 @@
     <div class="emergency-container">
         <main>
             <section class="response-options">
-                <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7f5dea00b3d6dd6d93d3dfe489daab8be1f24c4ea573465382761847f3e0e35b?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                <img src="images/logo.png"
                      alt="Response option 1"
                      class="response-icon" />
                 <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c9b4d91ebaffec9b6a4523e90c3e24aed1cf4280625bc040e4e2153995487ec2?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
@@ -310,8 +318,10 @@
              class="map-view" />-->
             </div>
             <section class="response-details">
-                <div class="response-icons">
-                    <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/caf76d3370b22146f3ae0011bb99ee4a2431ff447513a06bcb1a58866c3f99c8?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
+                <span class="help"> Help is on the way.</span>
+
+                <div class="response-icons" style="display:none">
+                    <img src="images/fire_truck.png"
                          alt="Vehicle"
                          class="vehicle-icon" />
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d1ca6445c56eda38f4b9fa66f5056b2d56481ddc6562951c69f9e27ac34773d4?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
@@ -319,13 +329,14 @@
                          class="route-icon" />
                 </div>
 
-                <div class="timing-details">
+                <div class="timing-details" style="display:none">
                     <div class="time-row">
-                        <time class="drone-response-time">**</time>
-                        <time class="motorbike-response-time">**</time>
+                        <time class="drone-response-time2" style="display:none"></time>
+                        <time class="motorbike-response-time2" style="display:none"></time>
+                        <span>Your request was submited sucessfully. Help is on the way.</span>
                     </div>
                     <div class="vehicle-row">
-                        <span>Drone</span>
+                        <span>Fire Truck</span>
                         <span>Motorbike</span>
                     </div>
                     <div class="time-row-alt">
@@ -338,7 +349,7 @@
                     </div>
                 </div>
 
-                <div class="status-indicators-alt">
+                <div class="status-indicators-alt" style="display:none">
                     <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d47ee21149fcb4d6219bf8934b2baef1095ac56e133bf6da244f375d2d744f8e?placeholderIfAbsent=true&apiKey=b20993390fe74d27981cc5e229fc9263"
                          alt="Status indicator 1"
                          class="status-icon-large" />
@@ -349,7 +360,7 @@
             </section>
 
             <footer class="action-buttons">
-                <button class="cancel-button">Cancel</button>
+                <button class="cancel-button">Request Submitted</button>
             </footer>
         </main>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlpCd4M34Hfxc-VRLXwUUZ6-pKFnKZA14&v=weekly&libraries=marker"
@@ -421,6 +432,7 @@
                             
                         patrolTypeName = item.patrol.patrolType.patrolTypeName;
                         patrolTypeImg.src = "/StaticFiles/images/" + item.patrol.patrolType.patrolTypeName + ".png";
+                        
 
                         if (patrolMarkers.has(item.patrolId)) {
                             var marker = patrolMarkers.get(item.patrolId);
