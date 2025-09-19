@@ -126,10 +126,10 @@
                     var row = $('<tr></tr>');
 
                     var created = new Date(item.created);
-                    row.append('<td><a href="/staticfiles/policedashboard.html?id=' + item.id + '">'  + item.userProfile.name+ '</a></td>');
+                    row.append('<td><a href="/staticfiles/afes.html?id=' + item.id + '">'  + item.userProfile.name+ '</a></td>');
                     row.append('<td>' + item.latitude + '</td>');
                     row.append('<td>' + item.longitude + '</td>');
-                    row.append('<td>' + item.emergencyType.emergencyTypeName + '</td>');
+                    //row.append('<td>' + item.emergencyType.emergencyTypeName + '</td>');
                     row.append('<td>' + created.toLocaleString("hi-IN") + '</td>');
                     table.append(row);
 

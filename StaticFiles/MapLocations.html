@@ -197,7 +197,7 @@
                 headerRow.append('<th>Name</th>');
                 headerRow.append('<th>Latitude</th>');
                 headerRow.append('<th>Longitude</th>');
-                headerRow.append('<th>Nature of Emergency</th>');
+                //headerRow.append('<th>Nature of Emergency</th>');
                 headerRow.append('<th>Created At</th>');
                 table.append(headerRow);
                 debugger;
@@ -209,7 +209,7 @@
                     row.append('<td><a href="/staticfiles/afes.html?id=' + item.id + '">' + item.userProfile.name + '</a></td>');
                     row.append('<td>' + item.latitude + '</td>');
                     row.append('<td>' + item.longitude + '</td>');
-                    row.append('<td>' + item.emergencyType.emergencyTypeName + '</td>');
+                    //row.append('<td>' + item.emergencyType.emergencyTypeName + '</td>');
                     row.append('<td>' + created.toLocaleString("hi-IN") + '</td>');
                     table.append(row);
 
@@ -222,31 +222,9 @@
                 });
 
                 // Append the table to the container
-                $('#table-container').append(table);
+                $('#table-container').append(table);               
 
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 10,
-                    center: new google.maps.LatLng(23.03, 72.58),
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                });
-
-                var infowindow = new google.maps.InfoWindow();
-
-                var marker, i;
-
-                for (i = 0; i < _locations.length; i++) {
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(_locations[i].latitude, _locations[i].longitude),
-                        map: map
-                    });
-
-                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                        return function () {
-                            infowindow.setContent(_locations[i].helpText);
-                            infowindow.open(map, marker);
-                        }
-                    })(marker, i));
-                }
+               
             });
         });
     </script>

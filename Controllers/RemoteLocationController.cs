@@ -52,7 +52,7 @@ namespace remote_poc_webapi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllItems()
         {
-            var items = await _context.RequestLog.OrderByDescending(d=>d.Created).Take(5).ToListAsync();
+            var items = await _context.RequestLog.Include(d=>d.UserProfile).OrderByDescending(d=>d.Created).Take(5).ToListAsync();
             return Ok(items);
         }
     }
