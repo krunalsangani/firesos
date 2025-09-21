@@ -23,10 +23,10 @@ namespace remote_poc_webapi.Controllers
         public ActionResult<RequestLog> Create(ItemDto item)
         {
             RequestLog Log= new RequestLog();
-            Log.Latitude = item.Latitude;
-            Log.Longitude = item.Longitude;
+            Log.UserProfile = _context.UserProfiles.Where(d => d.Id == item.UserId).FirstOrDefault();
+            Log.Latitude = Log.UserProfile.Latitude;
+            Log.Longitude = Log.UserProfile.Longitude;
             Log.HelpText = item.HelpText;
-            Log.UserProfile = _context.UserProfiles.Where(d=>d.Id==item.UserId).FirstOrDefault();
             Log.Created = DateTime.UtcNow;
 
             _context.RequestLog.Add(Log);

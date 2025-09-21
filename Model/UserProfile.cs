@@ -6,10 +6,12 @@ namespace remote_poc_webapi.Model
     public class UserProfile
     {
 
-        public UserProfile(string Name,String phoneNumber,string address, string emergencyName,string emergencyPhone,string emergencyRelationship)
+        public UserProfile(string Name,String phoneNumber, double latitude, double longitude, string address, string emergencyName,string emergencyPhone,string emergencyRelationship)
         {
             this.Name = Name;
             this.PhoneNumber = phoneNumber;
+            this.Latitude = latitude;  
+            this.Longitude = longitude;
             this.Address = address;
             this.EmergencyContact = emergencyName;
             this.EmergencyContactPhoneNumber = emergencyPhone;
@@ -20,6 +22,8 @@ namespace remote_poc_webapi.Model
         {
             this.Name = string.Empty;
             this.PhoneNumber = string.Empty;
+            this.Latitude = 0;
+            this.Longitude = 0;
             this.Address = string.Empty;
             this.EmergencyContact = string.Empty;
             this.EmergencyContactPhoneNumber = string.Empty;
@@ -35,6 +39,12 @@ namespace remote_poc_webapi.Model
 
         [Required]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        public double Latitude { get; set; }
+
+        [Required]
+        public double Longitude { get; set; }
 
         public string Address { get; set; }
 

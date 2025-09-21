@@ -24,12 +24,12 @@ namespace remote_poc_webapi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<UserProfile> Create(UserProfile profile)
         {
-            UserProfile profile1 = new UserProfile(profile.Name, profile.PhoneNumber, profile.Address, profile.EmergencyContact, profile.EmergencyContactPhoneNumber, profile.EmergencyContactRelationship);
+            UserProfile profile1 = new UserProfile(profile.Name, profile.PhoneNumber, profile.Latitude, profile.Latitude, profile.Address, profile.EmergencyContact, profile.EmergencyContactPhoneNumber, profile.EmergencyContactRelationship);
             _context.UserProfiles.Add(profile1);
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetItemById), new { id = profile1.Id }, profile1);
         }
-               
+
 
         // GET: api/Item/{id}
         [HttpGet("{id:int}")]
@@ -44,10 +44,10 @@ namespace remote_poc_webapi.Controllers
 
         // GET: api/Item/{id}
         [HttpGet]
-        public async Task<IActionResult> GetAllItems(double requestorLatitude,double requestorLongitude)
+        public async Task<IActionResult> GetAllItems(double requestorLatitude, double requestorLongitude)
         {
             var items = await _context.UserProfiles.ToListAsync();
-            return Ok(items.OrderBy(d=>d.Name));
+            return Ok(items.OrderBy(d => d.Name));
         }
     }
 

@@ -169,10 +169,41 @@
                 }
                 buttons.forEach(b => b.disabled = true);
 
-                if (!navigator.geolocation) {
-                    alert("Geolocation is not supported by this browser.");
-                    return;
-                }
+                const urlParams = new URLSearchParams(window.location.search);
+                const userId = urlParams.get("userid");
+                //const latitude = position.coords.latitude;
+                //const longitude = position.coords.longitude;
+                const optionalInput = ""; // document.getElementById("optional-input")?.value || "";
+
+                const data = {
+                    Latitude: 0,
+                    Longitude: 0,
+                    HelpText: optionalInput,
+                    UserId: userId,
+                    TypeId: serviceCode   // 1 = Fire, 2 = Police, 3 = Ambulance
+                };
+
+                const response = await fetch(
+                    serverURL + "/api/RemoteLocation",
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(data),
+                    }
+                );
+
+                if (!response.ok) throw new Error("Network response was not ok");
+                const responseData = await response.json();
+
+                console.log("Success:", responseData);
+                clicked.innerHTML = "Request Sent";
+
+                document.location.href = "requestorview.html?id=" + responseData.id;
+
+                //if (!navigator.geolocation) {
+                //    alert("Geolocation is not supported by this browser.");
+                //    return;
+                //}
 
                 //const position = await new Promise((resolve, reject) => {
                 //    navigator.geolocation.getCurrentPosition(resolve, reject, {
@@ -181,39 +212,10 @@
                 //        maximumAge: 0
                 //    });
                 //});
-                navigator.geolocation.getCurrentPosition(async (position) => {
+                //navigator.geolocation.getCurrentPosition(async (position) => {
                 
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const userId = urlParams.get("userid");
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    const optionalInput = ""; // document.getElementById("optional-input")?.value || "";
-
-                    const data = {
-                        Latitude: latitude,
-                        Longitude: longitude,
-                        HelpText: optionalInput,
-                        UserId: userId,
-                        TypeId: serviceCode   // 1 = Fire, 2 = Police, 3 = Ambulance
-                    };
-
-                    const response = await fetch(
-                        serverURL + "/api/RemoteLocation",
-                        {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(data),
-                        }
-                    );
-
-                    if (!response.ok) throw new Error("Network response was not ok");
-                    const responseData = await response.json();
-
-                    console.log("Success:", responseData);
-                    clicked.innerHTML = "Request Sent";
-
-                    document.location.href = "requestorview.html?id=" + responseData.id;
-                });
+                    
+                //});
             } catch (error) {
                 console.error("Error:", error);
                 alert("Unable to send location. Please try again.");
@@ -231,6 +233,10 @@
 <body>
     <!--Main Sections Starts here-->
     <section>
+        <div id="spinner-div" class="pt-5">
+            <div class="spinner-border text-primary" role="status">
+            </div>
+        </div>
         <div class="container">
             <div class="header">
                 <img src="images/logo.png" class="logo" alt="logo">
@@ -247,25 +253,25 @@
                 <span>
                     Thank you for sharing location of the fire.
                     After pressing the red button, you are also required to register your complaint on 101/112.
-                 </span>
-                 <span>
+                </span>
+                <span>
                     આગનાં સ્થળ અંગેની માહિતી મોકલવા બદલ આભાર.
                     લાલ બટન દબાવ્યા બાદ આગની ફરિયાદ ૧૦૧/૧૧૨ પર પણ કરવી જરુરી છે.
                 </span>
 
                 <!--<button class="btn-emg btn-police"
-                        data-service="2"
-                        aria-label="Police emergency"
-                        onclick="sendCoordinates(2)">
-                    <span class="icon"></span> Police
-                </button>
+                    data-service="2"
+                    aria-label="Police emergency"
+                    onclick="sendCoordinates(2)">
+                <span class="icon"></span> Police
+            </button>
 
-                <button class="btn-emg btn-ambulance"
-                        data-service="3"
-                        aria-label="Ambulance emergency"
-                        onclick="sendCoordinates(3)">
-                    <span class="icon"></span> Ambulance
-                </button>-->
+            <button class="btn-emg btn-ambulance"
+                    data-service="3"
+                    aria-label="Ambulance emergency"
+                    onclick="sendCoordinates(3)">
+                <span class="icon"></span> Ambulance
+            </button>-->
             </div>
             <footer>Logged in as: <span id="username"></span></footer>
             <div class="footer">

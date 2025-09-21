@@ -454,6 +454,7 @@
             }
 
             function loadRequestor(id, map) {
+                debugger
                 //Load Requestor information
                 var rdataUrl = serverURL + '/api/remoteLocation/' + id;
 
@@ -461,9 +462,9 @@
                     var requestorImage = document.createElement("img");
                     requestorImage.src = "/StaticFiles/images/requestor.png";
                     
-                    lat = data.latitude;
-                    lng = data.longitude;
-
+                    lat = data.userProfile.latitude;
+                    lng = data.userProfile.longitude;
+                    
                     if (markers.has(data.id)) {
                         var marker = markers.get(data.id);
                         marker.position = new google.maps.LatLng(data.latitude, data.longitude);
